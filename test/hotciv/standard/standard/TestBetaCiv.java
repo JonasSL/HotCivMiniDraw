@@ -1,8 +1,9 @@
-package hotciv.standard;
+package hotciv.standard.standard;
 
 import hotciv.framework.*;
 
 import hotciv.standard.Factories.BetaFactory;
+import hotciv.standard.GameImpl;
 import org.junit.*;
 
 import static org.junit.Assert.*;

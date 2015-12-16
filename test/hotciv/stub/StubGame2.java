@@ -1,6 +1,7 @@
 package hotciv.stub;
 
 import hotciv.framework.*;
+import hotciv.standard.CityImpl;
 
 import java.util.*;
 
@@ -126,7 +127,7 @@ public class StubGame2 implements Game {
     }
   }
 
-  public City getCityAt( Position p ) { return null; }
+  public City getCityAt( Position p ) { return new CityImpl(new Position(10,10),Player.BLUE); }
   public Player getWinner() { return null; }
   public int getAge() { return 0; }  
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
@@ -135,7 +136,7 @@ public class StubGame2 implements Game {
 
   public void setTileFocus(Position position) {
     System.out.println("-- StubGame2 / setTileFocus called.");
-    System.out.println(" *** IMPLEMENTATION PENDING ***");
+    gameObserver.tileFocusChangedAt(position);
   }
 
 }

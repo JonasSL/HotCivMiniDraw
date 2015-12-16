@@ -1,9 +1,10 @@
-package hotciv.standard;
+package hotciv.standard.standard;
 
 import hotciv.framework.*;
 
 import java.util.*;
 
+import hotciv.standard.Utility;
 import org.junit.*;
 import static org.junit.Assert.*;
 

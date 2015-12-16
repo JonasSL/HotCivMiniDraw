@@ -47,6 +47,7 @@ public final class GameImpl implements Game {
     private AttackingStrategy attackingStrategy;
     private int currentRound;
     private UnitStrategy unitStrategy;
+    private ArrayList<GameObserver> observers;
 
     public GameImpl(HotCivFactory factory) {
         currentPlayer = 0;
@@ -55,6 +56,7 @@ public final class GameImpl implements Game {
         tiles = new ArrayList<>();
         players = new ArrayList<>();
         year = -4000;
+        observers = new ArrayList<>();
 
         players.add(Player.RED);
         players.add(Player.BLUE);
@@ -141,6 +143,8 @@ public final class GameImpl implements Game {
                 return false;
             } else {
                 battleBetweenUnitsAt(from, to, distance);
+                worldChangeNotify(from);
+                worldChangeNotify(to);
                 return true;
             }
         }
@@ -181,6 +185,9 @@ public final class GameImpl implements Game {
 
         u.setMoveCount(u.getMoveCount()-distance);
         u.setPosition(to);
+
+        worldChangeNotify(from);
+        worldChangeNotify(to);
         return true;
     }
 
@@ -216,6 +223,10 @@ public final class GameImpl implements Game {
 
         unitStrategy.produceUnits(this);
 
+        //Notify the observers
+        for (GameObserver obs: observers) {
+            obs.turnEnds(players.get(currentPlayer), year);
+        }
     }
 
     private void advanceYear() {
@@ -237,6 +248,7 @@ public final class GameImpl implements Game {
         for(Position pos: positions) {
             if(getUnitAt(pos) == null) {
                 addUnitToGame(production, getCityAt(p).getOwner(), pos);
+                worldChangeNotify(pos);
                 break;
             }
         }
@@ -256,16 +268,19 @@ public final class GameImpl implements Game {
 
     public void performUnitActionAt(Position p) {
         actionStrategy.performAction(p,this);
+        worldChangeNotify(p);
     }
 
     @Override
     public void addObserver(GameObserver observer) {
-
+        observers.add(observer);
     }
 
     @Override
     public void setTileFocus(Position position) {
-
+        for (GameObserver obs: observers) {
+            obs.tileFocusChangedAt(position);
+        }
     }
 
     private void increaseProductionValue(int change) {
@@ -297,5 +312,11 @@ public final class GameImpl implements Game {
 
     public int getCurrentRound() {
         return currentRound;
+    }
+
+    private void worldChangeNotify(Position pos) {
+        for (GameObserver obs: observers) {
+            obs.worldChangedAt(pos);
+        }
     }
 }

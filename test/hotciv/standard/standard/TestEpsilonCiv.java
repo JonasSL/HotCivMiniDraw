@@ -1,10 +1,12 @@
-package hotciv.standard;
+package hotciv.standard.standard;
 
 import hotciv.framework.*;
 import hotciv.standard.EpsilonStrategies.EpsilonAttackingStrategy;
 import hotciv.standard.EpsilonStrategies.TestDice;
 import hotciv.standard.Factories.EpsilonFactory;
 import hotciv.standard.Factories.HotCivFactory;
+import hotciv.standard.GameImpl;
+import hotciv.standard.TileImpl;
 import org.junit.Before;
 import org.junit.Test;
 

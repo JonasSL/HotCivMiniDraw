@@ -39,6 +39,35 @@ public class ShowMove {
     editor.showStatus("Move units to see Game's moveUnit method being called.");
 
     // Replace the setting of the tool with your UnitMoveTool implementation.
-    editor.setTool( new SelectionTool(editor) );
+    editor.setTool( new UnitMoveTool(editor,game));
   }
+}
+
+class UnitMoveTool extends SelectionTool {
+    private Game game;
+    private DrawingEditor editor;
+    private Position fromPosition, toPosition;
+    public UnitMoveTool(DrawingEditor editor, Game game) {
+        super(editor);
+        this.editor = editor;
+        this.game = game;
+    }
+    public void mouseDown(MouseEvent e, int x, int y) {
+        fromPosition = GfxConstants.getPositionFromXY(x,y);
+
+        if (game.getUnitAt(fromPosition) != null) {
+            super.mouseDown(e,x,y);
+        }
+    }
+
+    public void mouseUp(MouseEvent e, int x, int y) {
+        toPosition = GfxConstants.getPositionFromXY(x,y);
+
+        if (game.moveUnit(fromPosition,toPosition)) {
+            super.mouseUp(e,x,y);
+        } else {
+            System.out.println("move not allowed");
+        }
+    }
+
 }

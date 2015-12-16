@@ -1,8 +1,9 @@
-package hotciv.standard;
+package hotciv.standard.standard;
 
 import hotciv.framework.*;
 import hotciv.standard.EpsilonStrategies.EpsilonAttackingStrategy;
 import hotciv.standard.Factories.SemiFactory;
+import hotciv.standard.GameImpl;
 import org.junit.Before;
 import org.junit.Test;
 

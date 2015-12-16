@@ -1,8 +1,9 @@
-package hotciv.standard;
+package hotciv.standard.standard;
 
 import hotciv.framework.*;
 import hotciv.standard.Factories.CustomLayoutFactory;
 import hotciv.standard.Factories.DeltaFactory;
+import hotciv.standard.GameImpl;
 import org.junit.Before;
 import org.junit.Test;
 
