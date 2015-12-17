@@ -45,11 +45,9 @@ public class ShowMove {
 
 class UnitMoveTool extends SelectionTool {
     private Game game;
-    private DrawingEditor editor;
     private Position fromPosition, toPosition;
     public UnitMoveTool(DrawingEditor editor, Game game) {
         super(editor);
-        this.editor = editor;
         this.game = game;
     }
     public void mouseDown(MouseEvent e, int x, int y) {
@@ -63,11 +61,19 @@ class UnitMoveTool extends SelectionTool {
     public void mouseUp(MouseEvent e, int x, int y) {
         toPosition = GfxConstants.getPositionFromXY(x,y);
 
-        if (game.moveUnit(fromPosition,toPosition)) {
-            super.mouseUp(e,x,y);
-        } else {
-            System.out.println("move not allowed");
+        int xc = toPosition.getRow();
+        int yc = toPosition.getColumn();
+        if (!(xc < GameConstants.WORLDSIZE && 0 <= xc)) {
+            xc = fromPosition.getRow();
         }
+        if (!(yc < GameConstants.WORLDSIZE && 0 <= yc)) {
+            yc = fromPosition.getColumn();
+        }
+        toPosition = new Position(xc,yc);
+        if (game.getUnitAt(fromPosition) != null) {
+            game.moveUnit(fromPosition,toPosition);
+        }
+
     }
 
 }

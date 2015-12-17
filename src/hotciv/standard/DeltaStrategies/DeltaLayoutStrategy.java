@@ -41,7 +41,7 @@ public class DeltaLayoutStrategy implements LayoutStrategy {
                 if ( tileChar == 'M' ) { type = GameConstants.MOUNTAINS; }
                 if ( tileChar == 'f' ) { type = GameConstants.FOREST; }
                 if ( tileChar == 'h' ) { type = GameConstants.HILLS; }
-                Position p = new Position(c,r);
+                Position p = new Position(r,c);
                 TileImpl t = (TileImpl) game.getTileAt(p);
                 t.setTypeString(type);
             }

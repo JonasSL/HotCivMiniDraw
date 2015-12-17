@@ -226,6 +226,7 @@ public final class GameImpl implements Game {
         //Notify the observers
         for (GameObserver obs: observers) {
             obs.turnEnds(players.get(currentPlayer), year);
+            obs.worldChangedAt(new Position(-1,-1));
         }
     }
 
@@ -236,14 +237,14 @@ public final class GameImpl implements Game {
     public void placeUnitAroundCityAt(Position p, String production) {
         ArrayList<Position> positions = new ArrayList<>();
         positions.add(p);
+        positions.add(new Position(p.getRow()-1,p.getColumn()));
+        positions.add(new Position(p.getRow()-1,p.getColumn()+1));
         positions.add(new Position(p.getRow(),p.getColumn()+1));
         positions.add(new Position(p.getRow()+1,p.getColumn()+1));
         positions.add(new Position(p.getRow()+1,p.getColumn()));
         positions.add(new Position(p.getRow()+1,p.getColumn()-1));
         positions.add(new Position(p.getRow(),p.getColumn()-1));
         positions.add(new Position(p.getRow()-1,p.getColumn()-1));
-        positions.add(new Position(p.getRow()-1,p.getColumn()));
-        positions.add(new Position(p.getRow()-1,p.getColumn()+1));
 
         for(Position pos: positions) {
             if(getUnitAt(pos) == null) {
